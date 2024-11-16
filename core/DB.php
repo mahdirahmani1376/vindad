@@ -6,7 +6,24 @@ use mysqli;
 
 class DB
 {
+    private mysqli $conn;
+
     public function __construct()
+    {
+        $this->setConnection();
+    }
+
+    public static function make(): self
+    {
+        return new self();
+    }
+
+    public function getConnection(): mysqli
+    {
+        return $this->conn;
+    }
+
+    public function setConnection(): mysqli
     {
         $database = require '../database.php';
         $this->conn = new mysqli(
@@ -15,16 +32,12 @@ class DB
             $database['password'],
             $database['database']
         );
-    }
-
-    public static function make()
-    {
-        return new self();
+        return $this->conn;
     }
 
     public function createPost(array $payLoad)
     {
-        $query = $this->conn->prepare("INSERT INTO posts (title, content) VALUES (?, ?)");
+        $query = $this->getConnection()->prepare("INSERT INTO posts (title, content) VALUES (?, ?)");
 
         $query->bind_param('ss', $payLoad['title'], $payLoad['content']);
 
@@ -37,24 +50,21 @@ class DB
         }
 
         $query->close();
-        $this->conn->close();
+        $this->getConnection()->close();
     }
 
-    public function getConnection()
-    {
-        return $this->conn;
-    }
 
-    public function checkUserExists($userId)
+
+    public function checkUserExists($userId): bool
     {
         $q = "SELECT * FROM users where id = {$userId}";
-        $result = $this->conn->execute_query($q)->fetch_assoc();
+        $result = $this->getConnection()->execute_query($q)->fetch_assoc();
         return (bool) $result;
     }
 
     public function deleteUser($userId)
     {
-        $query = $this->conn->prepare("DELETE FROM users WHERE id = (?)");
+        $query = $this->getConnection()->prepare("DELETE FROM users WHERE id = (?)");
 
         $query->bind_param('i', $userId);
 
@@ -65,7 +75,7 @@ class DB
         }
 
         $query->close();
-        $this->conn->close();
+        $this->getConnection()->close();
     }
 
 }
