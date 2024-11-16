@@ -12,7 +12,7 @@ CREATE TABLE IF NOT EXISTS users (
 
 # question 2 answer
 # we need to create a separate variations table in order to store the
-# repeatable data and have a normalized databases structure
+# repeatable data and have a normalized database structure
 CREATE TABLE IF NOT EXISTS products (
                                      id  INT PRIMARY KEY auto_increment,
                                      category_id INT,

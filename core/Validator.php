@@ -8,6 +8,11 @@ class Validator
 {
     public array $errors = [];
 
+    public static function make(): self
+    {
+        return new self();
+    }
+
     public function RuleString($key): bool
     {
         $rule = "$key is required and must be string";
@@ -26,7 +31,8 @@ class Validator
     {
         if (!empty($this->errors)){
             print_r(json_encode($this->errors));
-            die(402);
+            http_response_code(422);
+            die();
         }
     }
 

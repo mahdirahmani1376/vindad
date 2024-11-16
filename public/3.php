@@ -11,18 +11,8 @@ $data = [
     'user_id' => $_POST['user_id'],
 ];
 
-$validator = new Validator();
+$validator = Validator::make();
 $validator->checkUserExistsInDataBase($data['user_id']);
 
-$query = $conn->prepare("DELETE FROM users WHERE id = (?)");
+DB::make()->deleteUser($data['user_id']);
 
-$query->bind_param('i', $data['user_id']);
-
-if ($query->execute()) {
-    echo "User Deleted successfully";
-} else {
-    echo "Error: " . $query->error;
-}
-
-$query->close();
-$conn->close();
