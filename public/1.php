@@ -11,8 +11,8 @@ $payLoad = [
 ];
 
 $validator = Validator::make();
-$validator->RuleString($payLoad['title']);
-$validator->RuleString($payLoad['content']);
+$validator->RuleString('title',$payLoad['title']);
+$validator->RuleString('content',$payLoad['content']);
 $validator->validate();
 
 DB::make()->createPost($payLoad);

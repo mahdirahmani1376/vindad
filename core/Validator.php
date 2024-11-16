@@ -13,14 +13,14 @@ class Validator
         return new self();
     }
 
-    public function RuleString($key): bool
+    public function RuleString($key,$value): bool
     {
         $rule = "$key is required and must be string";
 
-        $check = !empty($key) && is_string($key);
+        $check = !empty($value) && is_string($value);
 
         if (! $check){
-            $this->errors[][$key] = $rule;
+            $this->errors[][$value] = $rule;
         }
 
         return $check;
