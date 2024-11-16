@@ -1,0 +1,15 @@
+{
+    "name": "mahdi/vindad",
+    "autoload": {
+        "psr-4": {
+            "Core\\": "core/"
+        }
+    },
+    "authors": [
+        {
+            "name": "acer",
+            "email": "rahmanimahdi16@gmail.com"
+        }
+    ],
+    "require": {}
+}
